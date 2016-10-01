@@ -1,6 +1,8 @@
 package mfaizhasan.com.ftsmexplorer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -82,6 +84,13 @@ public class InfoActivity extends AppCompatActivity {
         i.putExtra(KEYLAT,lat);
         i.putExtra(KEYLONGI,longi);
         i.putExtra(KEYTITLE,titleVal);
+
+
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("InitDabase", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("findMeCheck", 1);
+        editor.commit();
+
         startActivity(i);
 
     }

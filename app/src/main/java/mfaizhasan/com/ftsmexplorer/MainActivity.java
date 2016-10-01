@@ -3,16 +3,10 @@ package mfaizhasan.com.ftsmexplorer;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -20,11 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -35,7 +25,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.maps.android.SphericalUtil;
 
 public class MainActivity extends MapFragment
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -48,8 +37,6 @@ public class MainActivity extends MapFragment
         GoogleMap.OnCameraChangeListener{
 
     public static final String KEYTITLE = "TITLE";
-    private GoogleApiClient mGoogleApiClient;
-    private Location mCurrentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,13 +85,33 @@ public class MainActivity extends MapFragment
 
         if (id == R.id.deanOffice) {
 
+            Intent i = new Intent(this.getApplicationContext(), InfoActivity.class);
+            i.putExtra(KEYTITLE,"Deputy Dean");
+            startActivity(i);
+
         } else if (id == R.id.postgraduateOffice) {
+
+            Intent i = new Intent(this.getApplicationContext(), InfoActivity.class);
+            i.putExtra(KEYTITLE,"Postgraduate Office");
+            startActivity(i);
 
         } else if (id == R.id.undergraduateOffice) {
 
+            Intent i = new Intent(this.getApplicationContext(), InfoActivity.class);
+            i.putExtra(KEYTITLE,"Undergraduate Office");
+            startActivity(i);
+
         } else if (id == R.id.surau) {
 
+            Intent i = new Intent(this.getApplicationContext(), InfoActivity.class);
+            i.putExtra(KEYTITLE,"Surau");
+            startActivity(i);
+
         } else if (id == R.id.cafe) {
+
+            Intent i = new Intent(this.getApplicationContext(), InfoActivity.class);
+            i.putExtra(KEYTITLE,"Cafe");
+            startActivity(i);
 
         } else if (id == R.id.about) {
 
@@ -150,24 +157,41 @@ public class MainActivity extends MapFragment
                 .FusedLocationApi
                 .getLastLocation( mGoogleApiClient );
 
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("InitDabase", Context.MODE_PRIVATE);
+        int findMeCheck = sp.getInt("findMeCheck",0);
 
-        Intent i = getIntent();
-        Double lat = i.getDoubleExtra(InfoActivity.KEYLAT,0);
-        Double longi = i.getDoubleExtra(InfoActivity.KEYLONGI,0);
-        String titleVal = i.getStringExtra(InfoActivity.KEYTITLE);
-
-        if (lat != 0 && longi != 0){
+        if (findMeCheck == 1){
+            Intent i = getIntent();
+            Double lat = i.getDoubleExtra(InfoActivity.KEYLAT,0);
+            Double longi = i.getDoubleExtra(InfoActivity.KEYLONGI,0);
+            String titleVal = i.getStringExtra(InfoActivity.KEYTITLE);
             LatLng findMELat = new LatLng(lat, longi);
             MarkerOptions findME = new MarkerOptions().position( findMELat );
             findME.icon( BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.ic_pin_drop_black_24dp)) );
             findME.title(titleVal);
 
-            mGoogleMap.addMarker( findME );
+            addedMarker = mGoogleMap.addMarker( findME );
             initCameraFindMe(findMELat);
             showDistance(findMELat);
+
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putInt("findMeCheck", 2);
+            editor.commit();
         } else {
+
+            if (findMeCheck == 2){
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putInt("findMeCheck", 0);
+                editor.commit();
+
+                addedMarker.remove();
+                mPolyline.remove();
+            }
+
             initCamera(mCurrentLocation);
         }
+
+        initCamera(mCurrentLocation);
 
         //Block A
         LatLng blockALat = new LatLng(2.918381, 101.771676);
@@ -340,35 +364,6 @@ public class MainActivity extends MapFragment
         return false;
     }
 
-    private void showDistance(LatLng latLng) {
-        double distance = SphericalUtil.computeDistanceBetween( latLng, new LatLng( mCurrentLocation.getLatitude(),
-                mCurrentLocation.getLongitude()));
-        if( distance < 1000 ) {
-            Toast.makeText(this, String.format( "%4.2f%s", distance, "m" ), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, String.format("%4.3f%s", distance/1000, "km"), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private Bitmap getMarkerBitmapFromView(@DrawableRes int resId) {
-
-        View customMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_custom_marker, null);
-        ImageView markerImageView = (ImageView) customMarkerView.findViewById(R.id.profile_image);
-        markerImageView.setImageResource(resId);
-        customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        customMarkerView.layout(0, 0, customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight());
-        customMarkerView.buildDrawingCache();
-        Bitmap returnedBitmap = Bitmap.createBitmap(customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight(),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN);
-        Drawable drawable = customMarkerView.getBackground();
-        if (drawable != null)
-            drawable.draw(canvas);
-        customMarkerView.draw(canvas);
-        return returnedBitmap;
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -378,6 +373,16 @@ public class MainActivity extends MapFragment
                     mGoogleApiClient.connect();
                 }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("InitDabase", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("findMeCheck", 0);
+        editor.commit();
     }
 }
 

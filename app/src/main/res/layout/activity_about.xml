@@ -164,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="16dp"
-                    android:src="@drawable/ic_mood_black_24dp"/>
+                    android:src="@drawable/ic_date_range_black_24dp"/>
 
                 <TextView
                     android:layout_gravity="center_vertical"
@@ -172,6 +172,25 @@
                     android:layout_height="wrap_content"
                     android:text="Open: Monday to Friday (8.00 am - 5.00 pm)"
                     android:id="@+id/infoOpen"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingBottom="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="16dp"
+                    android:src="@drawable/ic_mood_black_24dp"/>
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Develop by Gerry and Faiz"/>
 
             </LinearLayout>
 
