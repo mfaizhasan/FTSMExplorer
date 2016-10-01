@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FTSM Explorer</string>
+    <string name="name">FTSM\nExplorer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="google_api_key">AIzaSyDoa09BvszoRopB6Jdw7rsVeDiIV9AoUvo</string>
+</resources>
