@@ -47,10 +47,10 @@ public class Splash extends AppCompatActivity {
             locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/DiscussionRoom1.jpg","Discussion Room 1-3","Level 1","Block D","2.918418", "101.772078"));
             locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/PERTAMA.jpg","PERTAMA (Student Association)","Level 1","Block D","2.918418", "101.772078"));
             locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/MultimediaStudio.jpg","Multimedia Studio","Level 2","Block D","2.918418", "101.772078"));
-            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/MultimediaHall.jpg","Multimedia Hall","Level G","Block G","2.917899", "101.771035"));
-            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/DeanOffice.jpg","Dean Office","Level 1","Block G","2.917899", "101.771035"));
-            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/Cafe.jpg","Cafe","Level 1","Block G","2.917899", "101.771035"));
-            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/Surau.jpg","Surau","Level 1 & Level 2","Block E","2.918198", "101.771461"));
+            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/MultimediaHall.jpg","Multimedia Hall","Level G","Block G","2.918316", "101.771040"));
+            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/DeanOffice.jpg","Dean Office","Level 1","Block G","2.917979", "101.770956"));
+            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/Cafe.jpg","Cafe","Level 1","Block G","2.918038", "101.771251"));
+            locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/Surau.jpg","Surau","Level 1 & Level 2","Block E","2.918191", "101.771424"));
             locationDBHandler.addLocation(new LocationData("http://sprep.me/ftsm/LectureHall.jpg","Lecture Hall","","Lecture Hall","2.918322", "101.772417"));
 
 

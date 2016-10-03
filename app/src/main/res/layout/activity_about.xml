@@ -35,10 +35,8 @@
         android:layout_below="@id/headerAbout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-
         android:clickable="true"
         android:focusable="true"
-        android:onClick="FindMe"
         android:background="@color/colorPrimary"
         android:id="@+id/infoAbout">
 
@@ -190,7 +188,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Develop by Gerry and Faiz"/>
+                    android:text="Developed by Gerry and Faiz"/>
 
             </LinearLayout>
 
